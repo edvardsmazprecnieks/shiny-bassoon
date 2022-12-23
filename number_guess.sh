@@ -17,12 +17,16 @@ echo -e "\nWelcome back, $USERNAME! You have played $GAMES_PLAYED games, and you
 fi
 
 SECRET_NUMBER=$((1+$RANDOM%1000))
+NUMBER_OF_GUESSES=1
 echo $SECRET_NUMBER
 echo -e "\nGuess the secret number between 1 and 1000:"
 read PLAYER_GUESS
 
 while [ $SECRET_NUMBER != $PLAYER_GUESS ]
 do
+if [[ $PLAYER_GUESS =~ ^[0-9]+$ ]]
+then
+NUMBER_OF_GUESSES=$((NUMBER_OF_GUESSES+1))
 if (( $PLAYER_GUESS > $SECRET_NUMBER ))
 then
 echo -e "\nIt's lower than that, guess again:"
@@ -31,4 +35,11 @@ else
 echo -e "\nIt's higher than that, guess again:"
 read PLAYER_GUESS
 fi
+else
+echo -e "\nThat is not an integer, guess again:"
+read PLAYER_GUESS
+fi
 done
+
+INSERT_GAME_RESULT=$($PSQL "INSERT INTO games(user_id, guesses) VALUES ($USER_ID, $NUMBER_OF_GUESSES)")
+echo -e "\nYou guessed it in $NUMBER_OF_GUESSES tries. The secret number was $SECRET_NUMBER. Nice job!"
