@@ -84,7 +84,7 @@ ALTER SEQUENCE public.games_game_id_seq OWNED BY public.games.game_id;
 
 CREATE TABLE public.users (
     user_id integer NOT NULL,
-    username character varying(22)
+    username character varying(22) NOT NULL
 );
 
 
