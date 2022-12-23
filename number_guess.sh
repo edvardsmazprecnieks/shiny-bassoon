@@ -18,7 +18,6 @@ fi
 
 SECRET_NUMBER=$((1+$RANDOM%1000))
 NUMBER_OF_GUESSES=1
-echo $SECRET_NUMBER
 echo -e "\nGuess the secret number between 1 and 1000:"
 read PLAYER_GUESS
 
